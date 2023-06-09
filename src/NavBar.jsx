@@ -1,0 +1,70 @@
+import React from 'react';
+import { Box, Button, Link, Flex, Image, Spacer } from '@chakra-ui/react';
+
+import FaceBook from './assets/social-media-icons/facebook_32x32.png';
+import Email from './assets/social-media-icons/email_32x32.png';
+import Twitter from './assets/social-media-icons/twitter_32x32.png';
+
+const NavBar = ({ accounts, setAccounts }) => {
+  const isConnect = Boolean(accounts[0]);
+
+  const connectAccount = async () => {
+    // The MetaMask inject into window the ethereum property.
+    if (window.ethereum) {
+      // get all accounts form metamask.
+      const accountsFromMetaMask = await window.ethereum.request({
+        method: 'eth_requestAccounts',
+      });
+
+      setAccounts(accountsFromMetaMask);
+    }
+  };
+
+  return (
+    <Flex justify={'space-between'} align={'center'} padding={'30px'}>
+      {/* left side  - Social Media Icons */}
+      <Flex justify={'space-around'} align={'center'} padding={'0 75px'}>
+        <Link href="#">
+          <Image src={FaceBook} boxSize={'42px'} margin={'0 15px'} />
+        </Link>
+        <Link href="#">
+          <Image src={Twitter} boxSize={'42px'} margin={'0 15px'} />
+        </Link>
+        <Link href="#">
+          <Image src={Email} boxSize={'42px'} margin={'0 15px'} />
+        </Link>
+      </Flex>
+
+      {/* Right side  - Sections and Connect */}
+      <Flex justify={'space-around'} align={'center'} width={'40%'} padding={'30px'}>
+        <Box margin={'0 15px'}>About</Box>
+        <Spacer />
+        <Box margin={'0 15px'}>Mint</Box>
+        <Spacer />
+        <Box margin={'0 15px'}>Time</Box>
+        <Spacer />
+
+        {/* Connect */}
+        {isConnect ? (
+          <Box margin={'0 15px'}>Connected</Box>
+        ) : (
+          <Button
+            backgroundColor={'#D6517D'}
+            boxShadow={'0px 2px 2px 1px #0F0F0F'}
+            borderRadius={'5px'}
+            color={'white'}
+            cursor={'pointer'}
+            fontFamily={'inherit'}
+            padding={'15px'}
+            margin={'0 15px'}
+            onClick={connectAccount}
+          >
+            Connect
+          </Button>
+        )}
+      </Flex>
+    </Flex>
+  );
+};
+
+export default NavBar;
