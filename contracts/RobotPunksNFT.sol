@@ -34,7 +34,7 @@ contract RobotPunksNFT is ERC721, Ownable {
       baseTokenUri = baseTokenUri_;
     }
     /*** Check the withdraw balance of this contract.*/
-    function withdraw() external onluOwner {
+    function withdraw() external onlyOwner {
       (bool success, ) = withdrawWallet.call{ value: address(this).balance }('');
       // Check withdraw balance
       require(success, "withdraw failed.");
